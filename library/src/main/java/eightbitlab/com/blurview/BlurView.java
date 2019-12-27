@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.logging.Handler;
+
 import static eightbitlab.com.blurview.BlockingBlurController.TRANSPARENT;
 
 /**
@@ -24,6 +26,8 @@ public class BlurView extends FrameLayout {
 
     @ColorInt
     private int overlayColor;
+
+    private boolean autoUpdate = true;
 
     public BlurView(Context context) {
         super(context);
@@ -44,6 +48,17 @@ public class BlurView extends FrameLayout {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BlurView, defStyleAttr, 0);
         overlayColor = a.getColor(R.styleable.BlurView_blurOverlayColor, TRANSPARENT);
         a.recycle();
+    }
+
+    public void requestUpdate(){
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                blurController.updateBlurViewSize();
+                blurController.requestUpdate();
+                invalidate();
+            }
+        }, 10);
     }
 
     @Override
@@ -72,7 +87,7 @@ public class BlurView extends FrameLayout {
         if (!isHardwareAccelerated()) {
             Log.e(TAG, "BlurView can't be used in not hardware-accelerated window!");
         } else {
-            blurController.setBlurAutoUpdate(true);
+            blurController.setBlurAutoUpdate(autoUpdate);
         }
     }
 
@@ -111,6 +126,7 @@ public class BlurView extends FrameLayout {
      * @see BlurViewFacade#setBlurAutoUpdate(boolean)
      */
     public BlurViewFacade setBlurAutoUpdate(boolean enabled) {
+        autoUpdate = enabled;
         return blurController.setBlurAutoUpdate(enabled);
     }
 

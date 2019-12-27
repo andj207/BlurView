@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <eightbitlab.com.blurview.BlurView
+    <FrameLayout
         android:id="@+id/topBlurView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
         android:outlineProvider="bounds"
-        app:blurOverlayColor="@color/colorOverlay"
         tools:targetApi="lollipop">
 
         <LinearLayout
@@ -40,16 +39,15 @@
                 android:padding="8dp"/>
 
         </LinearLayout>
-    </eightbitlab.com.blurview.BlurView>
+    </FrameLayout>
 
-    <eightbitlab.com.blurview.BlurView
+    <FrameLayout
         android:id="@+id/bottomBlurView"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="wrap_content"
         android:elevation="8dp"
         android:outlineProvider="bounds"
-        app:blurOverlayColor="@color/colorOverlay"
         tools:targetApi="lollipop">
 
         <android.support.design.widget.TabLayout
@@ -58,6 +56,6 @@
             android:layout_height="@dimen/bottom_tab_height"
             android:background="@android:color/transparent"/>
 
-    </eightbitlab.com.blurview.BlurView>
+    </FrameLayout>
 
 </FrameLayout>

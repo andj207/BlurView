@@ -61,4 +61,15 @@ public interface BlurViewFacade {
      * @return {@link BlurViewFacade}
      */
     BlurViewFacade setOverlayColor(@ColorInt int overlayColor);
+
+    /**
+     * Request update blur view in manual mode
+     */
+    BlurViewFacade requestUpdate();
+
+    /**
+     * Set down sample scale factor
+     * @param factor
+     */
+    BlurViewFacade setScaleFactor(float factor);
 }

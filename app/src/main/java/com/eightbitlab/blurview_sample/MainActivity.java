@@ -23,10 +23,6 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
-    @BindView(R.id.bottomBlurView)
-    BlurView bottomBlurView;
-    @BindView(R.id.topBlurView)
-    BlurView topBlurView;
     @BindView(R.id.radiusSeekBar)
     SeekBar radiusSeekBar;
     @BindView(R.id.root)
@@ -38,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setupBlurView();
+        //setupBlurView();
         setupViewPager();
     }
 
@@ -46,40 +42,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void setupBlurView() {
-        final float radius = 25f;
-        final float minBlurRadius = 10f;
-        final float step = 4f;
-
-        //set background, if your root layout doesn't have one
-        final Drawable windowBackground = getWindow().getDecorView().getBackground();
-
-        topBlurView.setupWith(root)
-                .setFrameClearDrawable(windowBackground)
-                .setBlurAlgorithm(new SupportRenderScriptBlur(this))
-                .setBlurRadius(radius)
-                .setHasFixedTransformationMatrix(true);
-
-        bottomBlurView.setupWith(root)
-                .setFrameClearDrawable(windowBackground)
-                .setBlurAlgorithm(new SupportRenderScriptBlur(this))
-                .setBlurRadius(radius)
-                .setHasFixedTransformationMatrix(true);
-
-        int initialProgress = (int) (radius * step);
-        radiusSeekBar.setProgress(initialProgress);
-
-        radiusSeekBar.setOnSeekBarChangeListener(new SeekBarListenerAdapter() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float blurRadius = progress / step;
-                blurRadius = Math.max(blurRadius, minBlurRadius);
-                topBlurView.setBlurRadius(blurRadius);
-                bottomBlurView.setBlurRadius(blurRadius);
-            }
-        });
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -108,16 +70,28 @@ public class MainActivity extends AppCompatActivity {
         FIRST("ScrollView") {
             @Override
             Fragment getFragment() {
-                return new ScrollFragment();
+                return new ImageFragment();
             }
         },
         SECOND("RecyclerView") {
             @Override
             Fragment getFragment() {
-                return new ListFragment();
+                return new ImageFragment();
             }
         },
         THIRD("Static") {
+            @Override
+            Fragment getFragment() {
+                return new ImageFragment();
+            }
+        },
+        FOUR("Static 1") {
+            @Override
+            Fragment getFragment() {
+                return new ImageFragment();
+            }
+        },
+        FIVE("Static 2") {
             @Override
             Fragment getFragment() {
                 return new ImageFragment();

@@ -34,7 +34,7 @@ final class BlockingBlurController implements BlurController {
     @ColorInt
     static final int TRANSPARENT = 0;
 
-    private final float scaleFactor = DEFAULT_SCALE_FACTOR;
+    private float scaleFactor = DEFAULT_SCALE_FACTOR;
     private float blurRadius = DEFAULT_BLUR_RADIUS;
     private float roundingWidthScaleFactor = 1f;
     private float roundingHeightScaleFactor = 1f;
@@ -222,8 +222,6 @@ final class BlockingBlurController implements BlurController {
             return false;
         }
 
-        updateBlur();
-
         canvas.save();
         canvas.scale(scaleFactor * roundingWidthScaleFactor, scaleFactor * roundingHeightScaleFactor);
         canvas.drawBitmap(internalBitmap, 0, 0, paint);
@@ -248,6 +246,12 @@ final class BlockingBlurController implements BlurController {
         int measuredHeight = blurView.getMeasuredHeight();
 
         init(measuredWidth, measuredHeight);
+    }
+
+    @Override
+    public BlurViewFacade setScaleFactor(float factor) {
+        scaleFactor = factor;
+        return this;
     }
 
     @Override
@@ -303,6 +307,12 @@ final class BlockingBlurController implements BlurController {
             this.overlayColor = overlayColor;
             blurView.invalidate();
         }
+        return this;
+    }
+
+    @Override
+    public BlurViewFacade requestUpdate() {
+        updateBlur();
         return this;
     }
 }

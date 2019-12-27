@@ -16,6 +16,11 @@ class NoOpController implements BlurController {
     }
 
     @Override
+    public BlurViewFacade setScaleFactor(float factor) {
+        return this;
+    }
+
+    @Override
     public void destroy() {
     }
 
@@ -51,6 +56,11 @@ class NoOpController implements BlurController {
 
     @Override
     public BlurViewFacade setHasFixedTransformationMatrix(boolean hasFixedTransformationMatrix) {
+        return this;
+    }
+
+    @Override
+    public BlurViewFacade requestUpdate() {
         return this;
     }
 }
